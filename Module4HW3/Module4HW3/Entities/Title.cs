@@ -4,6 +4,6 @@
     {
         public int TitleId { get; set; }
         public string Name { get; set; }
-        public List<Employee> Employees { get; set; } = new List<Employee>(); // 1 title belongs to * employees
+        public virtual List<Employee> Employees { get; set; } = new List<Employee>(); // 1 title belongs to * employees
     }
 }

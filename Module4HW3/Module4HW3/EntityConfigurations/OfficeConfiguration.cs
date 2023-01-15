@@ -12,6 +12,12 @@ namespace Module4HW5.EntityConfigurations
             builder.Property(o => o.OfficeId).ValueGeneratedOnAdd();
             builder.Property(o => o.Title).IsRequired().HasMaxLength(100);
             builder.Property(o => o.Location).IsRequired().HasMaxLength(100);
+
+            builder.HasData(new List<Office>()
+            {
+                new Office() { OfficeId = 1, Title = "test_office_title1", Location = "test_office_location1" },
+                new Office() { OfficeId = 2, Title = "test_office_title2", Location = "test_office_location2" }
+            });
         }
     }
 }

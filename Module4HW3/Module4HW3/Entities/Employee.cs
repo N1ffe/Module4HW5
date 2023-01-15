@@ -10,11 +10,11 @@
 
         // * employees belong to 1 office
         public int OfficeId { get; set; }
-        public Office Office { get; set; }
+        public virtual Office Office { get; set; }
 
         // * employees have 1 title
         public int TitleId { get; set; }
-        public Title Title { get; set; }
-        public List<EmployeeProject> EmployeeProjects { get; set; } = new List<EmployeeProject>();
+        public virtual Title Title { get; set; }
+        public virtual List<EmployeeProject> EmployeeProjects { get; set; } = new List<EmployeeProject>();
     }
 }

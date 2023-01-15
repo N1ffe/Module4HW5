@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Module4HW5.Converters;
 using Module4HW5.Entities;
 using Module4HW5.EntityConfigurations;
@@ -7,9 +8,9 @@ namespace Module4HW5
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext(DbContextOptions<ApplicationContext> options)
-            : base(options)
+        public ApplicationContext()
         {
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
         public DbSet<Employee> Employees { get; set; }
@@ -28,6 +29,15 @@ namespace Module4HW5
         protected override void ConfigureConventions(ModelConfigurationBuilder builder)
         {
             builder.Properties<DateOnly>().HaveConversion<DateOnlyConverter>().HaveColumnType("date");
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName)
+                .AddJsonFile("appsettings.json")
+                .Build();
+            string connectionString = configuration.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseLazyLoadingProxies().UseSqlServer(connectionString);
         }
     }
 }
